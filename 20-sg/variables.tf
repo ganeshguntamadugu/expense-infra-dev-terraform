@@ -64,6 +64,13 @@ variable "ansible_sg_tags" {
     }
 }
 
+variable "vpn_sg_tags" {
+    default = {
+        Resource = "Security Group"
+        Component = "VPN"
+    }
+}
+
 variable "parameter_tags" {
     default = {
         Resource = "SSM-Parameter-Store"

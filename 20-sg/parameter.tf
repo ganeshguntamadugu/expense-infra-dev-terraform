@@ -96,30 +96,16 @@ resource "aws_ssm_parameter" "ansible_sg_id" {
     )
 }
 
-# resource "aws_ssm_parameter" "app_alb_sg_id" {
-#     name  = "/${var.project_name}/${var.environment}/app-alb-sg-id"
-#     type  = "String"
-#     value = module.app_alb_sg.sg_id
+resource "aws_ssm_parameter" "vpn_sg_id" {
+    name  = "/${var.project_name}/${var.environment}/vpn-sg-id"
+    type  = "String"
+    value = module.vpn_sg.sg_id
 
-#     tags = merge(
-#     var.common_tags,
-#     var.parameter_tags,
-#         {
-#             Name = "${var.project_name}-${var.environment}-app-alb-sg-id"
-#         }
-#     )
-# }
-
-# resource "aws_ssm_parameter" "web_alb_sg_id" {
-#     name  = "/${var.project_name}/${var.environment}/web-alb-sg-id"
-#     type  = "String"
-#     value = module.web_alb_sg.sg_id
-
-#     tags = merge(
-#     var.common_tags,
-#     var.parameter_tags,
-#         {
-#             Name = "${var.project_name}-${var.environment}-web-alb-sg-id"
-#         }
-#     )
-# }
+    tags = merge(
+    var.common_tags,
+    var.parameter_tags,
+        {
+            Name = "${var.project_name}-${var.environment}-vpn-sg-id"
+        }
+    )
+}

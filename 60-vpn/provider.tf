@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "gangs-remote-state"
-    key = "expense-dev-application" #Key should not be same for each file
+    key = "expense-dev-vpn" #Key should not be same for each file
     region = "us-east-1"
     #dynamodb_table = "gangs_locking"
     use_lockfile = true
