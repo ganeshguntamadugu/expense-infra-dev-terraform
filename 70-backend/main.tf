@@ -47,26 +47,27 @@ resource "null_resource" "backend" {
   }
 }
 
-# resource "aws_ec2_instance_state" "backend" {
-#   instance_id = module.backend_ec2_instance.id
-#   state       = "stopped"
-#   depends_on = [null_resource.backend]
-# }
+resource "aws_ec2_instance_state" "backend" {
+  instance_id = module.backend_ec2_instance.id
+  state       = "stopped"
+  depends_on = [null_resource.backend]
+}
 
-# resource "aws_ami_from_instance" "backend" {
-#   name               = "${local.instance_name}-backend"
-#   source_instance_id = module.backend_ec2_instance.id
-#   depends_on = [aws_ec2_instance_state.backend]
-# }
+resource "aws_ami_from_instance" "backend" {
+  name               = "${local.instance_name}-backend"
+  source_instance_id = module.backend_ec2_instance.id
+  depends_on = [aws_ec2_instance_state.backend]
+}
 
-# resource "null_resource" "backend" {
-#   # Changes to any instance of the cluster requires re-provisioning
-#   triggers = {
-#     instance_id = module.backend_ec2_instance.id 
-#   }
+resource "null_resource" "backend_delete" {
+  # Changes to any instance of the cluster requires re-provisioning
+  triggers = {
+    instance_id = module.backend_ec2_instance.id 
+  }
 
-#   provisioner "local-exec" {
-#     # Bootstrap script called with private_ip of each node in the cluster
-#     command = "aws ec2 terminate-instances --instance-ids ${module.backend.id}"
-#   }
-# }
+  provisioner "local-exec" {
+    # Bootstrap script called with private_ip of each node in the cluster
+    command = "aws ec2 terminate-instances --instance-ids ${module.backend_ec2_instance.id}"
+  }
+  depends_on = [aws_ami_from_instance.backend]
+}
