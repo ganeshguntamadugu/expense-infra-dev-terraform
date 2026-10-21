@@ -21,6 +21,18 @@ variable "backend_tags" {
     }
 }
 
+variable "target_group_tags" {
+    default = {
+        Resource = "Target Group"
+    }
+}
+
+
+variable "launch_template_tags" {
+    default = {
+        Resource = "Launch Template"
+    }
+}
 
 
 
