@@ -34,5 +34,9 @@ variable "launch_template_tags" {
     }
 }
 
+variable "zone_name" {
+    default = "gangs.shop"
+}
+
 
 

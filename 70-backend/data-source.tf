@@ -10,6 +10,10 @@ data "aws_ssm_parameter" "private_subnet_ids" {
   name = "/${var.project_name}/${var.environment}/private-subnet-ids"
 }
 
+data "aws_ssm_parameter" "app_alb_listerner_id" {
+  name = "/${var.project_name}/${var.environment}/app-alb-listerner-id"
+}
+
 data "aws_ami" "expense" {
     most_recent      = true
     owners = ["973714476881"]

@@ -86,6 +86,8 @@ module "vpn_sg" {
     sg_tags = var.vpn_sg_tags
 }
 
+
+
 #Mysql allowing connections to 3306 from the instance attached to Backend
 resource "aws_security_group_rule" "mysql_backend" {
   type              = "ingress"
@@ -142,6 +144,25 @@ resource "aws_security_group_rule" "frontend_web_alb" {
   source_security_group_id = module.web_alb_sg.sg_id
   security_group_id = module.frontend_sg.sg_id
 }
+
+resource "aws_security_group_rule" "web_alb_http" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.web_alb_sg.sg_id
+}
+
+resource "aws_security_group_rule" "web_alb_https" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.web_alb_sg.sg_id
+}
+
 
 
 
@@ -215,6 +236,7 @@ resource "aws_security_group_rule" "bastion_public" {
   security_group_id = module.bastion_sg.sg_id
 }
 
+
 #MySQL allowing Ansible to connect through SSH protocol
 # resource "aws_security_group_rule" "mysql_ansible" {
 #   type              = "ingress"
@@ -254,6 +276,7 @@ resource "aws_security_group_rule" "ansible_public" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = module.ansible_sg.sg_id
 }
+
 
 resource "aws_security_group_rule" "vpn_public" {
   type              = "ingress"

@@ -15,14 +15,20 @@ variable "common_tags" {
     }
 }
 
-variable "app_alb_tags" {
+variable "web_alb_tags" {
     default = {
-        Resource = "Backend_ALB"
+        Resource = "Frontend_ALB"
     }
 }
 
 variable "zone_name" {
     default = "gangs.shop"
+}
+
+variable "parameter_tags" {
+    default = {
+        Resource = "SSM-Parameter-Store"
+    }
 }
 
 

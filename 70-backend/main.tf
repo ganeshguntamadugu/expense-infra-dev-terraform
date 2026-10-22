@@ -136,7 +136,16 @@ resource "aws_autoscaling_group" "backend" {
   desired_capacity          = 2
   max_size                  = 10
   min_size                  = 2
+  target_group_arns         = [aws_lb_target_group.backend.arn]
   #force_delete              = true
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    triggers = ["launch_template"]
+  }
 
 # If the instances are not healthy with in 15m, autoscaling will delete that instance
   timeouts {
@@ -175,3 +184,19 @@ resource "aws_autoscaling_policy" "cpu_target" {
   }
 }
 
+
+resource "aws_lb_listener_rule" "host_based_routing" {
+  listener_arn = local.app_alb_listerner_id
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.backend.arn
+  }
+
+  condition {
+    host_header {
+      values = ["backend.app-${var.environment}.${var.zone_name}"]
+    }
+  }
+}
