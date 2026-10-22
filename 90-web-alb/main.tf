@@ -28,7 +28,7 @@ resource "aws_lb_listener" "http" {
 
     fixed_response {
       content_type = "text/html"
-      message_body = "<h1>Hello I'm from Frontend ALB</h1>"
+      message_body = "<h1>Hello I'm from Frontend ALB HTTP</h1>"
       status_code  = "200"
     }
   }
@@ -46,7 +46,7 @@ resource "aws_lb_listener" "https" {
 
     fixed_response {
       content_type = "text/html"
-      message_body = "<h1>Hello I'm from Frontend ALB</h1>"
+      message_body = "<h1>Hello I'm from Frontend ALB HTTPS</h1>"
       status_code  = "200"
     }
   }
