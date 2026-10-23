@@ -3,6 +3,7 @@ resource "aws_route53_record" "web_alb" {
   zone_id = data.aws_route53_zone.expense.zone_id
   name    = "expense-${var.environment}"
   type    = "A"
+  #ttl     = 1
   allow_overwrite = true
 
   alias {
